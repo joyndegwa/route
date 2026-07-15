@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { authService } from "../Services/authservices";
+import MessageBanner from "../components/MessageBanner";
 import { validateSignUp, isValid } from "../utils/validtors";
 import type { FieldErrors } from "../utils/validtors";
 import { ROLE_LABELS, ROUTES, USER_ROLES } from "../utils/constants";
@@ -52,14 +53,14 @@ export default function Register() {
       <h2 className="text-2xl font-semibold">Create account</h2>
 
       {formError && (
-        <p role="alert" className="rounded bg-red-50 p-2 text-sm text-red-600">
+        <MessageBanner tone="error" compact>
           {formError}
-        </p>
+        </MessageBanner>
       )}
       {message && (
-        <p className="rounded bg-green-50 p-2 text-sm text-green-700">
+        <MessageBanner tone="success" compact>
           {message}
-        </p>
+        </MessageBanner>
       )}
 
       <div>

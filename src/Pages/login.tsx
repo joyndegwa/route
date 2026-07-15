@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { authService } from "../Services/authservices";
+import MessageBanner from "../components/MessageBanner";
 import { validateSignIn, isValid } from "../utils/validtors";
 import type { FieldErrors } from "../utils/validtors";
 import { ROUTES } from "../utils/constants";
@@ -37,9 +38,9 @@ export default function Login() {
       <h2 className="text-2xl font-semibold">Sign in</h2>
 
       {formError && (
-        <p role="alert" className="rounded bg-red-50 p-2 text-sm text-red-600">
+        <MessageBanner tone="error" compact>
           {formError}
-        </p>
+        </MessageBanner>
       )}
 
       <div>

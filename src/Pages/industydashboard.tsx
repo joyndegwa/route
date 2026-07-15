@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { productService } from "../Services/productservice";
 import { repairService } from "../Services/repairservice";
+import MessageBanner from "../components/MessageBanner";
 import StatCard from "../components/StatCard";
+import { getErrorMessage } from "../utils/errors";
 import { formatCurrency, repairStatusLabel } from "../utils/formatters";
 import type { Repair } from "../types/repair";
 
@@ -17,7 +19,7 @@ export default function IndustryDashboard() {
         setProductCount(allProducts.length);
       })
       .catch((err: unknown) =>
-        setError(err instanceof Error ? err.message : "Failed to load data"),
+        setError(getErrorMessage(err, "Failed to load data")),
       );
   }, []);
 
@@ -31,11 +33,7 @@ export default function IndustryDashboard() {
         <p className="text-slate-500">Repairs and products across the network.</p>
       </div>
 
-      {error && (
-        <p className="rounded bg-amber-50 p-3 text-sm text-amber-700">
-          {error}
-        </p>
-      )}
+      {error && <MessageBanner tone="warning">{error}</MessageBanner>}
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard label="Tracked products" value={productCount} />

@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { productService } from "../Services/productservice";
 import { recycleService } from "../Services/recycleservice";
+import MessageBanner from "../components/MessageBanner";
 import { RECYCLE_METHODS } from "../utils/constants";
+import { getErrorMessage } from "../utils/errors";
 import { formatDate, recycleStatusLabel } from "../utils/formatters";
 import type { Product } from "../types/product";
 import type { RecycleRecord } from "../types/product";
@@ -25,7 +27,7 @@ export default function RecyclingPage() {
       setProducts(owned);
       setRecords(existing);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load records");
+      setError(getErrorMessage(err, "Failed to load records"));
     }
   };
 
@@ -43,7 +45,7 @@ export default function RecyclingPage() {
       setProductId("");
       await load(user.id);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to submit request");
+      setError(getErrorMessage(err, "Failed to submit request"));
     } finally {
       setSubmitting(false);
     }
@@ -60,11 +62,7 @@ export default function RecyclingPage() {
         </p>
       </div>
 
-      {error && (
-        <p role="alert" className="rounded bg-red-50 p-3 text-sm text-red-600">
-          {error}
-        </p>
-      )}
+      {error && <MessageBanner tone="error">{error}</MessageBanner>}
 
       <div className="rounded-xl bg-green-50 p-4 text-green-800">
         You have earned <span className="font-semibold">{points}</span> green

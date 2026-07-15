@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { userRepo } from "../lib/user";
 import type { UserProfile } from "../types/user";
+import { getErrorMessage } from "../utils/errors";
 
 interface UseUserResult {
   profile: UserProfile | null;
@@ -25,7 +26,7 @@ export function useUser(userId: string | null | undefined): UseUserResult {
     try {
       setProfile(await userRepo.getById(userId));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load user");
+      setError(getErrorMessage(err, "Failed to load user"));
     } finally {
       setLoading(false);
     }

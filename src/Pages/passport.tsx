@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import QRCode from "react-qr-code";
 import { productService } from "../Services/productservice";
 import { APP_NAME, ROUTES } from "../utils/constants";
+import { getErrorMessage } from "../utils/errors";
 import { formatDate, productStatusLabel } from "../utils/formatters";
 import type { Product } from "../types/product";
 
@@ -21,7 +22,7 @@ export default function Passport() {
       .getById(productId)
       .then((found) => setProduct(found))
       .catch((err: unknown) =>
-        setError(err instanceof Error ? err.message : "Failed to load passport"),
+        setError(getErrorMessage(err, "Failed to load passport")),
       )
       .finally(() => setLoading(false));
   }, [productId]);

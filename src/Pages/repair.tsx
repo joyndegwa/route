@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { productService } from "../Services/productservice";
 import { repairService } from "../Services/repairservice";
+import MessageBanner from "../components/MessageBanner";
+import { getErrorMessage } from "../utils/errors";
 import { formatDate, repairStatusLabel } from "../utils/formatters";
 import type { Product } from "../types/product";
 import type { Repair } from "../types/repair";
@@ -24,7 +26,7 @@ export default function RepairPage() {
       setProducts(owned);
       setRepairs(existing);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load repairs");
+      setError(getErrorMessage(err, "Failed to load repairs"));
     }
   };
 
@@ -43,7 +45,7 @@ export default function RepairPage() {
       setProductId("");
       await load(user.id);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to submit request");
+      setError(getErrorMessage(err, "Failed to submit request"));
     } finally {
       setSubmitting(false);
     }
@@ -56,11 +58,7 @@ export default function RepairPage() {
         <p className="text-slate-500">Request and track product repairs.</p>
       </div>
 
-      {error && (
-        <p role="alert" className="rounded bg-red-50 p-3 text-sm text-red-600">
-          {error}
-        </p>
-      )}
+      {error && <MessageBanner tone="error">{error}</MessageBanner>}
 
       <form
         onSubmit={handleSubmit}

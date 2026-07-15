@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { authService } from "../Services/authservices";
+import MessageBanner from "../components/MessageBanner";
 import { isValidEmail } from "../utils/validtors";
 import { ROUTES } from "../utils/constants";
 
@@ -39,14 +40,14 @@ export default function ForgotPassword() {
       </p>
 
       {error && (
-        <p role="alert" className="rounded bg-red-50 p-2 text-sm text-red-600">
+        <MessageBanner tone="error" compact>
           {error}
-        </p>
+        </MessageBanner>
       )}
       {message && (
-        <p className="rounded bg-green-50 p-2 text-sm text-green-700">
+        <MessageBanner tone="success" compact>
           {message}
-        </p>
+        </MessageBanner>
       )}
 
       <div>

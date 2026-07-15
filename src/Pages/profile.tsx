@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { userRepo } from "../lib/user";
+import MessageBanner from "../components/MessageBanner";
+import { getErrorMessage } from "../utils/errors";
 import { roleLabel } from "../utils/formatters";
 
 export default function Profile() {
@@ -27,7 +29,7 @@ export default function Profile() {
       await refreshProfile();
       setMessage("Profile updated.");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to save profile");
+      setError(getErrorMessage(err, "Failed to save profile"));
     } finally {
       setSaving(false);
     }
@@ -45,14 +47,14 @@ export default function Profile() {
         className="space-y-4 rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200"
       >
         {message && (
-          <p className="rounded bg-green-50 p-2 text-sm text-green-700">
+          <MessageBanner tone="success" compact>
             {message}
-          </p>
+          </MessageBanner>
         )}
         {error && (
-          <p role="alert" className="rounded bg-red-50 p-2 text-sm text-red-600">
+          <MessageBanner tone="error" compact>
             {error}
-          </p>
+          </MessageBanner>
         )}
 
         <div>

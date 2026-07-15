@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { userRepo } from "../lib/user";
 import { productService } from "../Services/productservice";
 import { repairService } from "../Services/repairservice";
+import MessageBanner from "../components/MessageBanner";
 import StatCard from "../components/StatCard";
+import { getErrorMessage } from "../utils/errors";
 import { formatDate, roleLabel } from "../utils/formatters";
 import type { UserProfile } from "../types/user";
 
@@ -24,7 +26,7 @@ export default function AdminDashboard() {
         setRepairCount(allRepairs.length);
       })
       .catch((err: unknown) =>
-        setError(err instanceof Error ? err.message : "Failed to load data"),
+        setError(getErrorMessage(err, "Failed to load data")),
       );
   }, []);
 
@@ -35,11 +37,7 @@ export default function AdminDashboard() {
         <p className="text-slate-500">Platform-wide overview.</p>
       </div>
 
-      {error && (
-        <p className="rounded bg-amber-50 p-3 text-sm text-amber-700">
-          {error}
-        </p>
-      )}
+      {error && <MessageBanner tone="warning">{error}</MessageBanner>}
 
       <div className="grid gap-4 sm:grid-cols-3">
         <StatCard label="Users" value={users.length} />
