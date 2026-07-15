@@ -78,6 +78,33 @@ export function validateSignIn(fields: SignInFields): FieldErrors {
   return errors;
 }
 
+export interface ProductFields {
+  name: string;
+  category: string;
+  manufacturer: string;
+  serialNumber: string;
+}
+
+/** Validate device-registration fields, returning a map of field -> message. */
+export function validateProduct(fields: ProductFields): FieldErrors {
+  const errors: FieldErrors = {};
+
+  if (!isNonEmpty(fields.name)) {
+    errors.name = "Device name is required.";
+  }
+  if (!isNonEmpty(fields.category)) {
+    errors.category = "Category is required.";
+  }
+  if (!isNonEmpty(fields.manufacturer)) {
+    errors.manufacturer = "Manufacturer is required.";
+  }
+  if (!isNonEmpty(fields.serialNumber)) {
+    errors.serialNumber = "Serial number is required.";
+  }
+
+  return errors;
+}
+
 export function isValid(errors: FieldErrors): boolean {
   return Object.keys(errors).length === 0;
 }

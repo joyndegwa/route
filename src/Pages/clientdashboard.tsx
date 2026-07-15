@@ -4,6 +4,7 @@ import { productService } from "../Services/productservice";
 import { recycleService } from "../Services/recycleservice";
 import { repairService } from "../Services/repairservice";
 import StatCard from "../components/StatCard";
+import RegisterDeviceForm from "../components/RegisterDeviceForm";
 import { productStatusLabel } from "../utils/formatters";
 import type { Product } from "../types/product";
 
@@ -54,6 +55,17 @@ export default function ClientDashboard() {
         <StatCard label="Recycled" value={summary.recycled} />
         <StatCard label="Green points" value={points} hint="From recycling" />
       </div>
+
+      {user && (
+        <div className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+          <RegisterDeviceForm
+            ownerId={user.id}
+            onRegistered={(product) =>
+              setProducts((prev) => [product, ...prev])
+            }
+          />
+        </div>
+      )}
 
       <div className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
         <h2 className="mb-4 text-lg font-semibold">My products</h2>

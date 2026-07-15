@@ -5,6 +5,7 @@ import {
   isValidEmail,
   isValidPassword,
   isValidRole,
+  validateProduct,
   validateSignIn,
   validateSignUp,
 } from "./validtors";
@@ -89,5 +90,33 @@ describe("validateSignIn", () => {
     const errors = validateSignIn({ email: "bad", password: "" });
     expect(errors.email).toBeDefined();
     expect(errors.password).toBeDefined();
+  });
+});
+
+describe("validateProduct", () => {
+  it("passes when all required fields are present", () => {
+    expect(
+      isValid(
+        validateProduct({
+          name: "Laptop",
+          category: "Computer",
+          manufacturer: "Acme",
+          serialNumber: "SN-1",
+        }),
+      ),
+    ).toBe(true);
+  });
+
+  it("flags every missing required field", () => {
+    const errors = validateProduct({
+      name: "",
+      category: "  ",
+      manufacturer: "",
+      serialNumber: "",
+    });
+    expect(errors.name).toBeDefined();
+    expect(errors.category).toBeDefined();
+    expect(errors.manufacturer).toBeDefined();
+    expect(errors.serialNumber).toBe("Serial number is required.");
   });
 });
