@@ -41,6 +41,7 @@ function profileFromMetadata(user: User | null): UserProfile | null {
     fullName: (meta.full_name as string) ?? "",
     role: (meta.role as UserRole) ?? "client",
     organization: (meta.organization as string | null) ?? null,
+    phone: (meta.phone as string | null) ?? null,
     createdAt: user.created_at ?? new Date().toISOString(),
   };
 }

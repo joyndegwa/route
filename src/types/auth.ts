@@ -6,6 +6,7 @@ export interface SignUpInput {
   fullName: string;
   role: UserRole;
   organization?: string | null;
+  phone?: string | null;
 }
 
 export interface SignInInput {

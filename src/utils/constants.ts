@@ -58,6 +58,7 @@ export const ROUTES = {
   login: "/login",
   register: "/register",
   forgotPassword: "/forgot-password",
+  forgotPasswordVerify: "/forgot-password/verify",
   dashboard: "/dashboard",
   adminDashboard: "/dashboard/admin",
   clientDashboard: "/dashboard/client",
@@ -66,6 +67,8 @@ export const ROUTES = {
   repairs: "/dashboard/repairs",
   recycling: "/dashboard/recycling",
   passport: "/passport",
+  registerDevice: "/dashboard/devices/register",
+  scan: "/dashboard/scan",
 } as const;
 
 /** Points awarded to a user for recycling a product. */

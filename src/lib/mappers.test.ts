@@ -14,6 +14,7 @@ describe("mapProfileRow", () => {
       full_name: null,
       role: null,
       organization: null,
+      phone: null,
       created_at: "2024-01-01",
     };
     expect(mapProfileRow(row)).toEqual({
@@ -22,6 +23,7 @@ describe("mapProfileRow", () => {
       fullName: "",
       role: "client",
       organization: null,
+      phone: null,
       createdAt: "2024-01-01",
     });
   });
@@ -33,10 +35,12 @@ describe("mapProfileRow", () => {
       full_name: "Ada",
       role: "admin",
       organization: "Cognition",
+      phone: "+254700000000",
       created_at: "2024-01-01",
     };
     expect(mapProfileRow(row).role).toBe("admin");
     expect(mapProfileRow(row).fullName).toBe("Ada");
+    expect(mapProfileRow(row).phone).toBe("+254700000000");
   });
 });
 
@@ -53,6 +57,11 @@ describe("mapProductRow", () => {
       manufacture_date: "2023-01-01",
       description: "A phone",
       created_at: "2024-01-01",
+      material_composition: "Plastic, Metal",
+      carbon_footprint_kg: 10.5,
+      circular_economy_score: 75,
+      estimated_value: 100.0,
+      repairability_score: 80,
     };
     expect(mapProductRow(row)).toEqual({
       id: "p1",
@@ -65,6 +74,11 @@ describe("mapProductRow", () => {
       manufactureDate: "2023-01-01",
       description: "A phone",
       createdAt: "2024-01-01",
+      materialComposition: "Plastic, Metal",
+      carbonFootprintKg: 10.5,
+      circularEconomyScore: 75,
+      estimatedValue: 100.0,
+      repairabilityScore: 80,
     });
   });
 });

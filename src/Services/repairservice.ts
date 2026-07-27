@@ -32,6 +32,7 @@ export const repairService = {
   canTransition,
   listForRequester: (requesterId: string) =>
     repairRepo.listByRequester(requesterId),
+  listByProduct: (productId: string) => repairRepo.listByProduct(productId),
   listAll: () => repairRepo.listAll(),
   request: (requesterId: string, input: CreateRepairInput) =>
     repairRepo.create(requesterId, input),

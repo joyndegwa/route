@@ -33,43 +33,57 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Admin dashboard</h1>
+        <h1 className="text-2xl font-bold text-slate-900">Admin dashboard</h1>
         <p className="text-slate-500">Platform-wide overview.</p>
       </div>
 
       {error && <MessageBanner tone="warning">{error}</MessageBanner>}
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <StatCard label="Users" value={users.length} />
-        <StatCard label="Products" value={productCount} />
-        <StatCard label="Repairs" value={repairCount} />
+        <StatCard label="Users" value={users.length} icon="👥" />
+        <StatCard label="Products" value={productCount} icon="📦" />
+        <StatCard label="Repairs" value={repairCount} icon="🔧" />
       </div>
 
-      <div className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-        <h2 className="mb-4 text-lg font-semibold">Users</h2>
+      <div className="rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 overflow-hidden">
+        <div className="border-b border-slate-200 px-6 py-4">
+          <h2 className="text-lg font-semibold text-slate-900">Users</h2>
+        </div>
         {users.length === 0 ? (
-          <p className="text-sm text-slate-500">No users found.</p>
+          <div className="p-6">
+            <p className="text-sm text-slate-500">No users found.</p>
+          </div>
         ) : (
-          <table className="w-full text-left text-sm">
-            <thead className="text-slate-500">
-              <tr>
-                <th className="py-2">Name</th>
-                <th className="py-2">Email</th>
-                <th className="py-2">Role</th>
-                <th className="py-2">Joined</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {users.map((u) => (
-                <tr key={u.id}>
-                  <td className="py-2">{u.fullName || "—"}</td>
-                  <td className="py-2">{u.email}</td>
-                  <td className="py-2">{roleLabel(u.role)}</td>
-                  <td className="py-2">{formatDate(u.createdAt)}</td>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-slate-50 text-slate-500">
+                <tr>
+                  <th className="px-6 py-3 font-medium">Name</th>
+                  <th className="px-6 py-3 font-medium">Email</th>
+                  <th className="px-6 py-3 font-medium">Role</th>
+                  <th className="px-6 py-3 font-medium">Joined</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {users.map((u) => (
+                  <tr key={u.id} className="transition hover:bg-slate-50">
+                    <td className="px-6 py-3 font-medium text-slate-900">
+                      {u.fullName || "—"}
+                    </td>
+                    <td className="px-6 py-3 text-slate-600">{u.email}</td>
+                    <td className="px-6 py-3">
+                      <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
+                        {roleLabel(u.role)}
+                      </span>
+                    </td>
+                    <td className="px-6 py-3 text-slate-600">
+                      {formatDate(u.createdAt)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>

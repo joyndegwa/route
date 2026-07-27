@@ -19,7 +19,9 @@ export default function MessageBanner({
 }: MessageBannerProps) {
   return (
     <p
-      role={tone === "error" ? "alert" : undefined}
+      role={
+        tone === "error" || tone === "warning" ? "alert" : undefined
+      }
       className={`rounded ${TONE_CLASSES[tone]} ${compact ? "p-2" : "p-3"} text-sm`}
     >
       {children}

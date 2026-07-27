@@ -34,8 +34,10 @@ export interface FieldErrors {
 export interface SignUpFields {
   email: string;
   password: string;
+  confirmPassword: string;
   fullName: string;
   role: string;
+  phone: string;
 }
 
 /** Validate registration form fields, returning a map of field -> message. */
@@ -51,6 +53,12 @@ export function validateSignUp(fields: SignUpFields): FieldErrors {
   if (!isValidPassword(fields.password)) {
     errors.password =
       "Password must be at least 8 characters and include a letter and a number.";
+  }
+  if (fields.password !== fields.confirmPassword) {
+    errors.confirmPassword = "Passwords do not match.";
+  }
+  if (!isNonEmpty(fields.phone)) {
+    errors.phone = "Phone number is required.";
   }
   if (!isValidRole(fields.role)) {
     errors.role = "Select a valid role.";

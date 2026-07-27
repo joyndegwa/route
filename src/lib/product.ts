@@ -17,6 +17,11 @@ export interface ProductRow {
   manufacture_date: string | null;
   description: string | null;
   created_at: string;
+  material_composition: string | null;
+  carbon_footprint_kg: number | null;
+  circular_economy_score: number | null;
+  estimated_value: number | null;
+  repairability_score: number | null;
 }
 
 const PRODUCTS_TABLE = "products";
@@ -34,6 +39,11 @@ export function mapProductRow(row: ProductRow): Product {
     manufactureDate: row.manufacture_date,
     description: row.description,
     createdAt: row.created_at,
+    materialComposition: row.material_composition ?? null,
+    carbonFootprintKg: row.carbon_footprint_kg ?? null,
+    circularEconomyScore: row.circular_economy_score ?? null,
+    estimatedValue: row.estimated_value ?? null,
+    repairabilityScore: row.repairability_score ?? null,
   };
 }
 

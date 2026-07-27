@@ -11,6 +11,11 @@ export interface Product {
   manufactureDate: string | null;
   description?: string | null;
   createdAt: string;
+  materialComposition?: string | null;
+  carbonFootprintKg?: number | null;
+  circularEconomyScore?: number | null;
+  estimatedValue?: number | null;
+  repairabilityScore?: number | null;
 }
 
 export interface CreateProductInput {
@@ -20,6 +25,11 @@ export interface CreateProductInput {
   serialNumber: string;
   manufactureDate?: string | null;
   description?: string | null;
+  materialComposition?: string | null;
+  carbonFootprintKg?: number | null;
+  circularEconomyScore?: number | null;
+  estimatedValue?: number | null;
+  repairabilityScore?: number | null;
 }
 
 export interface UpdateProductInput {
@@ -28,6 +38,11 @@ export interface UpdateProductInput {
   manufacturer?: string;
   status?: ProductStatus;
   description?: string | null;
+  materialComposition?: string | null;
+  carbonFootprintKg?: number | null;
+  circularEconomyScore?: number | null;
+  estimatedValue?: number | null;
+  repairabilityScore?: number | null;
 }
 
 export interface RecycleRecord {

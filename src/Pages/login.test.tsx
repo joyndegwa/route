@@ -7,6 +7,8 @@ import { authService } from "../Services/authservices";
 
 const navigate = vi.fn();
 
+let locationHref = "/";
+
 vi.mock("react-router-dom", async () => {
   const actual =
     await vi.importActual<typeof import("react-router-dom")>(
@@ -19,7 +21,48 @@ vi.mock("../Services/authservices", () => ({
   authService: { login: vi.fn() },
 }));
 
+const mockUseAuth = vi.hoisted(() =>
+  vi.fn(() => ({
+    user: null,
+    loading: false,
+    role: null,
+    profile: null,
+    session: null,
+    signOut: vi.fn(),
+    refreshProfile: vi.fn(),
+  })),
+);
+
+vi.mock("../hooks/useAuth", () => ({
+  useAuth: mockUseAuth,
+}));
+
 const mockedLogin = vi.mocked(authService.login);
+
+beforeEach(() => {
+  vi.clearAllMocks();
+  locationHref = "/";
+  Object.defineProperty(window, "location", {
+    value: {
+      get href() {
+        return locationHref;
+      },
+      set href(val: string) {
+        locationHref = val;
+      },
+    },
+    writable: true,
+  });
+  mockUseAuth.mockReturnValue({
+    user: null,
+    loading: false,
+    role: null,
+    profile: null,
+    session: null,
+    signOut: vi.fn(),
+    refreshProfile: vi.fn(),
+  });
+});
 
 function renderLogin() {
   return render(
@@ -28,10 +71,6 @@ function renderLogin() {
     </MemoryRouter>,
   );
 }
-
-beforeEach(() => {
-  vi.clearAllMocks();
-});
 
 describe("Login", () => {
   it("shows validation errors and does not call the service", async () => {
@@ -47,7 +86,7 @@ describe("Login", () => {
     expect(mockedLogin).not.toHaveBeenCalled();
   });
 
-  it("submits valid credentials and navigates to the dashboard", async () => {
+  it("submits valid credentials and redirects to the dashboard", async () => {
     const user = userEvent.setup();
     mockedLogin.mockResolvedValue({ success: true, error: null });
     renderLogin();
@@ -60,7 +99,8 @@ describe("Login", () => {
       email: "ada@example.com",
       password: "secret123",
     });
-    expect(navigate).toHaveBeenCalledWith("/dashboard");
+
+    expect(window.location.href).toBe("/dashboard");
   });
 
   it("shows an error banner when the service reports failure", async () => {

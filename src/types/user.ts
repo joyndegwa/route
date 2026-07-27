@@ -6,6 +6,7 @@ export interface UserProfile {
   fullName: string;
   role: UserRole;
   organization?: string | null;
+  phone?: string | null;
   createdAt: string;
 }
 

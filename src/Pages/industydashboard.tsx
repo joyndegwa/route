@@ -29,42 +29,48 @@ export default function IndustryDashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Industry dashboard</h1>
+        <h1 className="text-2xl font-bold text-slate-900">Industry dashboard</h1>
         <p className="text-slate-500">Repairs and products across the network.</p>
       </div>
 
       {error && <MessageBanner tone="warning">{error}</MessageBanner>}
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Tracked products" value={productCount} />
-        <StatCard label="Total repairs" value={repairs.length} />
-        <StatCard label="Active repairs" value={active} />
-        <StatCard label="Completed revenue" value={formatCurrency(revenue)} />
+        <StatCard label="Tracked products" value={productCount} icon="📦" />
+        <StatCard label="Total repairs" value={repairs.length} icon="🔧" />
+        <StatCard label="Active repairs" value={active} icon="⚡" />
+        <StatCard label="Completed revenue" value={formatCurrency(revenue)} icon="💰" />
       </div>
 
-      <div className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-        <h2 className="mb-4 text-lg font-semibold">Repair queue</h2>
+      <div className="rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 overflow-hidden">
+        <div className="border-b border-slate-200 px-6 py-4">
+          <h2 className="text-lg font-semibold text-slate-900">Repair queue</h2>
+        </div>
         {repairs.length === 0 ? (
-          <p className="text-sm text-slate-500">No repair requests yet.</p>
+          <div className="p-6">
+            <p className="text-sm text-slate-500">No repair requests yet.</p>
+          </div>
         ) : (
-          <ul className="divide-y divide-slate-100">
+          <div className="divide-y divide-slate-100">
             {repairs.map((repair) => (
-              <li
+              <div
                 key={repair.id}
-                className="flex items-center justify-between py-3"
+                className="flex items-center justify-between px-6 py-4 transition hover:bg-slate-50"
               >
                 <div className="min-w-0">
-                  <p className="truncate font-medium">{repair.description}</p>
+                  <p className="truncate font-medium text-slate-900">
+                    {repair.description}
+                  </p>
                   <p className="text-xs text-slate-500">
                     Product {repair.productId}
                   </p>
                 </div>
-                <span className="rounded-full bg-slate-100 px-3 py-1 text-xs">
+                <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
                   {repairStatusLabel(repair.status)}
                 </span>
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </div>
     </div>

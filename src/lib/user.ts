@@ -7,6 +7,7 @@ export interface ProfileRow {
   full_name: string | null;
   role: string | null;
   organization: string | null;
+  phone: string | null;
   created_at: string;
 }
 
@@ -20,6 +21,7 @@ export function mapProfileRow(row: ProfileRow): UserProfile {
     fullName: row.full_name ?? "",
     role: (row.role as UserProfile["role"]) ?? "client",
     organization: row.organization,
+    phone: row.phone,
     createdAt: row.created_at,
   };
 }
@@ -57,6 +59,30 @@ export const userRepo = {
       .from(PROFILES_TABLE)
       .update(patch)
       .eq("id", id)
+      .select("*")
+      .single();
+    if (error) throw error;
+    return mapProfileRow(data as ProfileRow);
+  },
+
+  insert: async (input: {
+    id: string;
+    email: string;
+    fullName: string;
+    role: string;
+    organization?: string | null;
+    phone?: string | null;
+  }): Promise<UserProfile> => {
+    const { data, error } = await supabase
+      .from(PROFILES_TABLE)
+      .insert({
+        id: input.id,
+        email: input.email,
+        full_name: input.fullName,
+        role: input.role,
+        organization: input.organization ?? null,
+        phone: input.phone ?? null,
+      })
       .select("*")
       .single();
     if (error) throw error;

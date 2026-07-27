@@ -58,7 +58,9 @@ describe("validateSignUp", () => {
       fullName: "Ada Lovelace",
       email: "ada@example.com",
       password: "abc12345",
+      confirmPassword: "abc12345",
       role: "client",
+      phone: "+1234567890",
     });
     expect(isValid(errors)).toBe(true);
   });
@@ -68,12 +70,16 @@ describe("validateSignUp", () => {
       fullName: "",
       email: "bad",
       password: "weak",
+      confirmPassword: "different",
       role: "nope",
+      phone: "",
     });
     expect(isValid(errors)).toBe(false);
     expect(errors).toHaveProperty("fullName");
     expect(errors).toHaveProperty("email");
     expect(errors).toHaveProperty("password");
+    expect(errors).toHaveProperty("confirmPassword");
+    expect(errors).toHaveProperty("phone");
     expect(errors).toHaveProperty("role");
   });
 });

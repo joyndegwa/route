@@ -44,6 +44,16 @@ export const repairRepo = {
     return (data ?? []).map((row) => mapRepairRow(row as RepairRow));
   },
 
+  listByProduct: async (productId: string): Promise<Repair[]> => {
+    const { data, error } = await supabase
+      .from(REPAIRS_TABLE)
+      .select("*")
+      .eq("product_id", productId)
+      .order("created_at", { ascending: false });
+    if (error) throw error;
+    return (data ?? []).map((row) => mapRepairRow(row as RepairRow));
+  },
+
   listAll: async (): Promise<Repair[]> => {
     const { data, error } = await supabase
       .from(REPAIRS_TABLE)
